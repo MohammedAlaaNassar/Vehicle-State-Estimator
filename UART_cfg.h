@@ -44,7 +44,7 @@
 
 /* INTERRUPT */
 #define INTERRUPT     1
-#define NO_INTERRUPT  0
+#define POOLING       0
 
 /*  CLK EDGE  */
 #define FALLING       1
@@ -53,22 +53,5 @@
 /* INITIALIZATION	 */
 #define INITIALIZED			1
 #define NOT_INITIALIZED		0
-
-
-
-
-typedef struct
-{
-	uint8 USART_mode;
-	uint8 communication_model;
-	uint8 data_size;
-	uint8 parity;
-	uint8 stop_pattern;
-	uint8 tarnsmission_speed;
-	uint32 baud_rate;
-	uint8 interrupt;
-	uint8 clk_edge;
-	uint8 IS_init;
-} UART_cnfg_t ;
 
 #endif /* UART_CFG_H_ */

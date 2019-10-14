@@ -11,7 +11,7 @@
 #include "common_macros.h"
 
 #include "UART.h"
-
+#include "UART_Pbcfg.h"
 
 
 void UART_init(void){
@@ -119,7 +119,7 @@ void UART_init(void){
 		switch(UART.stop_pattern)
 		{
 
-		case  NO_INTERRUPT : CLEAR_BIT(UCSRB,RXCIE); // RX COMPLETE DISABLED
+		case  POOLING : CLEAR_BIT(UCSRB,RXCIE); // RX COMPLETE DISABLED
 		                     CLEAR_BIT(UCSRB,TXCIE); // TX COMPLETE DISABLED
 		break;
 
@@ -169,7 +169,7 @@ void UART_init(void){
 
 void UART_sendByte(const uint8 data){
 
-	if ( (UART.IS_init==INITIALIZED) && (UART.interrupt== NO_INTERRUPT) )
+	if ( (UART.IS_init==INITIALIZED) && (UART.interrupt== POOLING ) )
 	{
 
 		while(BIT_IS_CLEAR(UCSRA,UDRE)){} // UDRE flag is set when the TX buffer (UDR) is empty
@@ -185,7 +185,7 @@ void UART_sendByte(const uint8 data){
 
 void UART_recieveByte(uint8 * data){
 
-	if ( (UART.IS_init==INITIALIZED) && (UART.interrupt== NO_INTERRUPT) )
+	if ( (UART.IS_init==INITIALIZED) && (UART.interrupt== POOLING ) )
 	{
 
 		while(BIT_IS_CLEAR(UCSRA,RXC)){} //RXC flag is set when the UART receive data

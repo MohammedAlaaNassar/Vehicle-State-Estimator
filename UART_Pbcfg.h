@@ -8,7 +8,7 @@
 #ifndef UART_PBCFG_H_
 #define UART_PBCFG_H_
 
-#include "UART_cfg.h"
+#include "UART.h"
 
 
 extern UART_cnfg_t UART;
