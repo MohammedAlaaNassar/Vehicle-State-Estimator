@@ -8,14 +8,16 @@
 #include "micro_config.h"
 #include "std_types.h"
 #include "common_macros.h"
-
 #include "TIMER.h"
-#include "TIMER_Pbcfg.h"
+#include "lcd.h"
+
+static uint16 num=0;
+uint8 TIME_flag=0;
 
 void TIMER_interrupt(void);
 
 //TIMER_cnfg_t TIMER = {TIMER_ID,WGM_Mode,COM_mode,Prescaler,interrupt,INITIALIZATION};
-//TIMER_cnfg_t TIMER = {TIMER0,NORMAL_MODE,NORMAL,PRESCALER0,INTERRUPT,NOT_INITIALIZED};
+//TIMER_cnfg_t TIMER = {TIMER0,NORMAL_MODE,NORMAL,PPULLCALER0,INTERRUPT,NOT_INITIALIZED};
 
 
 void TIMER_init(void){
@@ -23,7 +25,7 @@ void TIMER_init(void){
 	if( TIMER.IS_init == NOT_INITIALIZED )
 	{
 
-		TIMER.IS_init == INITIALIZED; // @suppress("Statement has no effect")
+		TIMER.IS_init = INITIALIZED;
 
 		switch(TIMER.WGM_Mode)
 		{   /********************  WGM mode    ********************/
@@ -453,15 +455,15 @@ void TIMER_start(void)
 	{
 		switch(TIMER.prescaler)
 		{
-		case PRESCALER0: TCCR0 |= 0b00000001;
+		case PPULLCALER0: TCCR0 |= 0b00000001;
 		break;
-		case PRESCALER8: TCCR0 |= 0b00000010;
+		case PPULLCALER8: TCCR0 |= 0b00000010;
 		break;
-		case PRESCALER64: TCCR0  |= 0b00000011;
+		case PPULLCALER64: TCCR0  |= 0b00000011;
 		break;
-		case PRESCALER256: TCCR0  |= 0b00000100;
+		case PPULLCALER256: TCCR0  |= 0b00000100;
 		break;
-		case PRESCALER1024: TCCR0  |= 0b00000101;
+		case PPULLCALER1024: TCCR0  |= 0b00000101;
 		break;
 		case EXTERNAL_CLK_FALLING : TCCR0  |= 0b00000110;
 		break;
@@ -478,19 +480,19 @@ void TIMER_start(void)
 	{
 		switch(TIMER.prescaler)
 		{
-		case PRESCALER0: TCCR2 |= 0b00000001;
+		case PPULLCALER0: TCCR2 |= 0b00000001;
 		break;
-		case PRESCALER8: TCCR2 |= 0b00000010;
+		case PPULLCALER8: TCCR2 |= 0b00000010;
 		break;
-		case PRESCALER32: TCCR2  |= 0b00000011;
+		case PPULLCALER32: TCCR2  |= 0b00000011;
 		break;
-		case PRESCALER64: TCCR2  |= 0b00000100;
+		case PPULLCALER64: TCCR2  |= 0b00000100;
 		break;
-		case PRESCALER128: TCCR2  |= 0b00000101;
+		case PPULLCALER128: TCCR2  |= 0b00000101;
 		break;
-		case PRESCALER256: TCCR2  |= 0b00000110;
+		case PPULLCALER256: TCCR2  |= 0b00000110;
 		break;
-		case PRESCALER1024: TCCR2 |= 0b00000111;
+		case PPULLCALER1024: TCCR2 |= 0b00000111;
 		break;
 		default: TIMER.IS_init = NOT_INITIALIZED;
 		break;
@@ -503,15 +505,15 @@ void TIMER_start(void)
 	{
 		switch(TIMER.prescaler)
 		{
-		case PRESCALER0: TCCR1B |= 0b00000001;
+		case PPULLCALER0: TCCR1B |= 0b00000001;
 		break;
-		case PRESCALER8: TCCR1B |= 0b00000010;
+		case PPULLCALER8: TCCR1B |= 0b00000010;
 		break;
-		case PRESCALER64: TCCR1B |= 0b00000011;
+		case PPULLCALER64: TCCR1B |= 0b00000011;
 		break;
-		case PRESCALER256: TCCR1B |= 0b00000100;
+		case PPULLCALER256: TCCR1B |= 0b00000100;
 		break;
-		case PRESCALER1024: TCCR1B |= 0b00000101;
+		case PPULLCALER1024: TCCR1B |= 0b00000101;
 		break;
 		case EXTERNAL_CLK_FALLING : TCCR1B |= 0b00000110;
 		break;
@@ -598,13 +600,15 @@ void TIMER_stop(void)
 
 ISR(TIMER0_OVF_vect)
 {
-
-
+	num+=1;
+	if(num==4000){
+		TIME_flag=1;
+		num=0;
+	}
 }
 
 ISR(TIMER0_COMP_vect)
 {
-
 
 }
 
@@ -613,12 +617,10 @@ ISR(TIMER0_COMP_vect)
 ISR(TIMER1_OVF_vect)
 {
 
-
 }
 
 ISR(TIMER1_COMPA_vect)
 {
-
 
 }
 
@@ -632,6 +634,7 @@ ISR(TIMER2_OVF_vect)
 
 ISR(TIMER2_COMP_vect)
 {
+
 
 }
 

@@ -20,8 +20,9 @@ typedef struct
 	uint8 IS_init;
 } TIMER_cnfg_t ;
 
+#include "TIMER_Pbcfg.h"
 
-
+extern uint8 TIME_flag;
 extern void TIMER_init(void);
 extern void TIMER_start(void);
 extern void TIMER_stop(void);

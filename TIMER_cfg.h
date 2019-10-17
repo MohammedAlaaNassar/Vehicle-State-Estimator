@@ -27,18 +27,18 @@
 #define CLEAR   2
 #define SET     3
 
-/* PRESCALER */
-#define PRESCALER0             0
-#define PRESCALER8             1
-#define PRESCALER64            2
-#define PRESCALER256           3
-#define PRESCALER1024          4
+/* PPULLCALER */
+#define PPULLCALER0             0
+#define PPULLCALER8             1
+#define PPULLCALER64            2
+#define PPULLCALER256           3
+#define PPULLCALER1024          4
 #define EXTERNAL_CLK_RISING    5
 #define EXTERNAL_CLK_FALLING   6
 
-/* PRESCALER TIMER 2 */
-#define PRESCALER32             7
-#define PRESCALER128            8
+/* PPULLCALER TIMER 2 */
+#define PPULLCALER32             7
+#define PPULLCALER128            8
 
 /* INTERRUPT */
 #define INTERRUPT     1
