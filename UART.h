@@ -26,7 +26,6 @@ typedef struct
 } UART_cnfg_t ;
 
 
-
 extern void UART_init(void);
 extern void UART_sendByte(const uint8);
 extern void UART_recieveByte(uint8 *);

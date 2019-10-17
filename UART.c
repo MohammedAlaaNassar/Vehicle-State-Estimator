@@ -1,7 +1,7 @@
 /*
  * UART.c
  *
- *  Created on: Oct 11, 2019
+ *  Created on: Oct 15, 2019
  *      Author: Mohammed
  */
 
@@ -109,14 +109,14 @@ void UART_init(void){
 
 		/*  BAUD RATE  */
 
-		/* First 8 bits from the BAUD_PRESCALE inside UBRRL and last 4 bits in UBRRH*/
-		uint32 BAUD_PRESCALE = (((F_CPU / (USART_BAUDRATE * 8UL))) - 1);
-		UBRRH = BAUD_PRESCALE>>8;
-		UBRRL = BAUD_PRESCALE;
+		/* First 8 bits from the BAUD_PPULLCALE inside UBRRL and last 4 bits in UBRRH*/
+		uint32 BAUD_PPULLCALE = (((F_CPU / (USART_BAUDRATE * 8UL))) - 1);
+		UBRRH = BAUD_PPULLCALE>>8;
+		UBRRL = BAUD_PPULLCALE;
 
 
 		/* INTERRUPT */
-		switch(UART.stop_pattern)
+		switch(UART.interrupt)
 		{
 
 		case  POOLING : CLEAR_BIT(UCSRB,RXCIE); // RX COMPLETE DISABLED
@@ -151,7 +151,7 @@ void UART_init(void){
 		}
 
 		/*  CLK EDGE  */
-		switch(UART.stop_pattern)
+		switch(UART.clk_edge)
 		{
 		case RISING :
 		case NA : CLEAR_BIT(UCSRC,UCPOL); // RISING XCK Edge OR Asynchronous
@@ -210,4 +210,5 @@ ISR(USART_TXC_vect)
 }
 
 */
+
 
